@@ -1,4 +1,5 @@
 import Order from "../models/order.model.js";
+import Product from "../models/product.model.js";
 import User from "../models/user.model.js";
 
 export const getOrderHistory = async (req, res, next) => {
@@ -56,7 +57,14 @@ export const createOrder = async (req, res, next) => {
           .status(404)
           .json({ success: false, message: "Product not found" });
       }
+      if (item.quantity > product.stock) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Not enough stock" });
+      }
       totalAmount += item.quantity * product.price;
+      product.stock -= item.quantity;
+      await product.save();
     }
 
     const order = await Order.create({
@@ -89,7 +97,7 @@ export const cancelOrder = async (req, res, next) => {
         .json({ success: false, message: "Order not found" });
     }
 
-    if (order.user.toString() !== req.user._id.toString()) {
+    if (order.user.toString() !== userId.toString()) {
       return res.status(403).json({ success: false, message: "Unauthorized" });
     }
 
@@ -118,7 +126,7 @@ export const getAllOrders = async (req, res, next) => {
       filter.user = req.query.userId;
     }
 
-    const orders = await Order.find(filter).populate("items.proudct user");
+    const orders = await Order.find(filter).populate("items.product user");
 
     res.status(200).json({ success: true, orders });
   } catch (error) {
@@ -154,7 +162,7 @@ export const updateOrderStatus = async (req, res, next) => {
     order.status = status;
     await order.save();
 
-    res.send(200).json({
+    res.status(200).json({
       success: true,
       message: "Order status updated successfully",
       order,
@@ -198,7 +206,7 @@ export const updateOrderPaymentStatus = async (req, res, next) => {
 
 export const deleteOrder = async (req, res, next) => {
   try {
-    const orderId = req.param.id;
+    const orderId = req.params.id;
 
     const order = await Order.findById(orderId);
     if (!order) {
