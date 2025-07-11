@@ -38,6 +38,27 @@ export const getProductById = async (req, res, next) => {
   }
 };
 
+export const getRecentProducts = async (req, res, next) => {
+  try {
+    const count = parseInt(req.params.count);
+
+    if (isNaN(count) || count <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid count value",
+      });
+    }
+
+    const products = await Product.find()
+      .sort({ createdAt: -1 })
+      .limit(count);
+
+    res.status(200).json({ success: true, products });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const createProduct = async (req, res, next) => {
   try {
     const { name, description, price, category, stock, image } = req.body;
