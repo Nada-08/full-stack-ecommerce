@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { FaSearch, FaShoppingCart, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaSearch,
+  FaShoppingCart,
+  FaUserCircle,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
@@ -19,13 +24,15 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex items-center px-6 py-4 my-2 mx-4 bg-gray-50 shadow-xl rounded-3xl">
-      <div className="text-xl font-bold text-amber-400">ShopMate</div>
+    <nav className="flex items-center px-6 py-4 mx-4 my-2 shadow-xl bg-gray-50 rounded-3xl">
+      <a href="/" className="text-xl font-bold text-amber-400">
+        ShopMate
+      </a>
 
       {/* Search bar */}
       <form
         onSubmit={handleSearch}
-        className="w-full max-w-md mx-4 hidden md:flex"
+        className="hidden w-full max-w-md mx-4 md:flex"
       >
         <div className="relative w-full">
           <input
@@ -35,40 +42,39 @@ export default function Navbar() {
             onChange={(e) => setSearch(e.target.value)}
             className="w-full p-4 py-2 border border-gray-200 rounded-3xl focus:outline-none focus:ring-2 focus:ring-gray-500"
           />
-          <span className="absolute inset-y-0 right-3 pl-3 flex items-center pointer-events-none">
-            <FaSearch className="text-amber-400 w-5 h-5" />
+          <span className="absolute inset-y-0 flex items-center pl-3 pointer-events-none right-3">
+            <FaSearch className="w-5 h-5 text-amber-400" />
           </span>
         </div>
       </form>
 
-      {/* Right-side icons/links */}
-      <div className="flex items-center space-x-4 ml-auto">
+      <div className="flex items-center ml-auto space-x-4">
         {!user ? (
           <>
             <a
               href="/login"
-              className="text-gray-800 text-lg font-bold hover:text-violet-600"
+              className="text-lg font-bold text-gray-800 hover:text-violet-600"
             >
               Login
             </a>
             <a
               href="/signup"
-              className="text-gray-800 text-lg font-bold hover:text-violet-600"
+              className="text-lg font-bold text-gray-800 hover:text-violet-600"
             >
               Sign Up
             </a>
           </>
         ) : (
           <>
-            <a href="/cart" className="text-gray-700 hover:text-amber-500">
+            <a href="/cart" className="p-1.5 text-amber-500 hover:text-violet-600">
               <FaShoppingCart size={22} />
             </a>
-            <a href="/profile" className="text-gray-700 hover:text-amber-500">
+            <a href="/profile" className="p-1.5 text-amber-500 hover:text-violet-600">
               <FaUserCircle size={22} />
             </a>
             <button
               onClick={handleLogout}
-              className="text-gray-700 hover:text-amber-500"
+              className="p-1.5 text-amber-500 hover:text-violet-600"
             >
               <FaSignOutAlt size={22} />
             </button>

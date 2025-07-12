@@ -29,13 +29,13 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded-3xl shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Welcome Back</h2>
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="w-full max-w-md p-8 bg-white shadow-md rounded-3xl">
+        <h2 className="mb-6 text-2xl font-bold text-center">Welcome Back</h2>
 
         <form>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block mb-1 text-sm font-medium text-gray-700">
               Email
             </label>
             <input
@@ -47,7 +47,7 @@ export const Login = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block mb-1 text-sm font-medium text-gray-700">
               Password
             </label>
             <input
@@ -64,7 +64,7 @@ export const Login = () => {
             </span>
             <a
               href="/signup"
-              className="px-2 py-1 text-amber-500 font-semibold hover:text-amber-600"
+              className="px-2 py-1 font-semibold text-amber-500 hover:text-amber-600"
               style={{ fontSize: "1rem" }}
             >
               Sign Up
@@ -75,7 +75,7 @@ export const Login = () => {
             type="submit"
             onClick={handleSubmit}
             disabled={loading}
-            className="mt-7 px-8 py-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-3xl transition block mx-auto"
+            className="block px-8 py-2 mx-auto font-semibold text-white transition mt-7 bg-amber-500 hover:bg-amber-600 rounded-3xl"
             style={{ minWidth: "180px" }}
           >
             {loading ? "Logging in..." : "Login  "}
